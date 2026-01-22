@@ -1,11 +1,19 @@
-from aiogram import Bot, Dispatcher, executor
 import os
+from aiogram import Bot, Dispatcher, executor, types
 
-bot = Bot(token=os.getenv("8574328978:AAEsQda_kQAPXE3Eacb8lyNXcopdzJI2orc"))
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN topilmadi! Environment variables ni tekshir")
+
+bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
+
 @dp.message_handler(commands=["start"])
-async def start(msg):
+async def start(msg: types.Message):
     await msg.answer("Bot ishlayapti ✅")
 
-executor.start_polling(dp)
+
+if __name__ == "__main__":
+    executor.start_polling(dp, skip_updates=True)
